@@ -13,6 +13,7 @@ set :use_sudo, false
 set :ssh_options, { :forward_agent => true }
 set :deploy_via, :remote_cache
 set :releases_path, "/var/www/shared/releases"
+set :initd, "/etc/init.d/gifasaurus"
 
 set :default_environment, {
   'GOROOT'  => "/usr/local/go",
@@ -24,17 +25,17 @@ role :app, "gifasaur.us"
 
 namespace :deploy do
   task :start do
-    stop
     compile
+    stop
+    run "sudo #{initd} start"
   end
 
   task :stop do
-
+    run "sudo #{initd} stop"
   end
 
   task :restart do
-    stop
-    start
+    run "sudo #{initd} restart"
   end
 
   task :compile do
@@ -56,6 +57,7 @@ namespace :deploy do
   task :setup do
     run "git clone #{repository} #{deploy_to}"
     run "mkdir -p #{releases_path}"
+    run "cp #{deploy_to}/config/init.d /etc/init.d/gifasaurus"
   end
 
   desc "Update the deployed code"
