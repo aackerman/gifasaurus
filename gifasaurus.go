@@ -9,10 +9,10 @@ import (
 )
 
 var indextpl = template.Must(template.ParseFiles("views/index.html"))
-var files, _ = ioutil.ReadDir("img")
+var env = os.Getenv("APP_ENV")
 
 func index(w http.ResponseWriter, r *http.Request) {
-	log.Println("index request")
+	files, _ := ioutil.ReadDir("img")
 	indextpl.Execute(w, map[string]interface{}{
 		"images": files,
 	})
@@ -34,8 +34,6 @@ func main() {
 	http.HandleFunc("/", index)
 	http.Handle("/static/", static())
 	http.Handle("/img/", imager())
-
-	env := os.Getenv("APP_ENV")
 
 	if env == "production" {
 		if err := http.ListenAndServe(":80", nil); err != nil {

@@ -1,9 +1,7 @@
-default_run_options[:pty] = true
-
 set :application, "gifasaur.us"
-set :repository,  "git@github.com:aackerman/gifasaur.us.git"
+set :repository,  "git@github.com:aackerman/gifasaurus.git"
 set :scm, :git
-set :deploy_to, "/var/www/gifasaur.us"
+set :deploy_to, "/var/www/gifasaurus"
 set :user, "aackerman"
 set :owner, "aackerman"
 set :group, "aackerman"
@@ -14,6 +12,8 @@ set :ssh_options, { :forward_agent => true }
 set :deploy_via, :remote_cache
 set :releases_path, "/var/www/shared/releases"
 set :initd, "/etc/init.d/gifasaurus"
+
+default_run_options[:pty] = true
 
 set :default_environment, {
   'GOROOT'  => "/usr/local/go",
@@ -57,7 +57,7 @@ namespace :deploy do
   task :setup do
     run "git clone #{repository} #{deploy_to}"
     run "mkdir -p #{releases_path}"
-    run "cp #{deploy_to}/config/init.d /etc/init.d/gifasaurus"
+    run "sudo cp #{deploy_to}/config/init.d /etc/init.d/gifasaurus"
   end
 
   desc "Update the deployed code"
