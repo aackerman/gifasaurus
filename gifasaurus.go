@@ -12,6 +12,7 @@ var indextpl = template.Must(template.ParseFiles("views/index.html"))
 var files, _ = ioutil.ReadDir("img")
 
 func index(w http.ResponseWriter, r *http.Request) {
+	log.Println("index request")
 	indextpl.Execute(w, map[string]interface{}{
 		"images": files,
 	})
