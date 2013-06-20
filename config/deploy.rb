@@ -15,8 +15,9 @@ set :deploy_via, :remote_cache
 set :releases_path, "/var/www/shared/releases"
 
 set :default_environment, {
-  'GOROOT' => "/usr/local/go",
-  'GOPATH' => "/home/aackerman/go",
+  'GOROOT'  => "/usr/local/go",
+  'GOPATH'  => "/home/aackerman/go",
+  'APP_ENV' => "production"
 }
 
 role :app, "gifasaur.us"

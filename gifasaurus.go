@@ -33,7 +33,16 @@ func main() {
 	http.HandleFunc("/", index)
 	http.Handle("/static/", static())
 	http.Handle("/img/", imager())
-	if err := http.ListenAndServe(":8000", nil); err != nil {
-		log.Fatal("ListenAndServe:", err)
-	}
+
+  env = os.Getenv('APP_ENV')
+
+  if env == 'production' {
+    if err := http.ListenAndServe(":80", nil); err != nil {
+      log.Fatal("ListenAndServe:", err)
+    }
+  } else {
+    if err := http.ListenAndServe(":8000", nil); err != nil {
+      log.Fatal("ListenAndServe:", err)
+    }
+  }
 }

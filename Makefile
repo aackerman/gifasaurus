@@ -1,5 +1,5 @@
 default:
-	go build .
+	go install .
 
 clean:
 
