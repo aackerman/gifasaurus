@@ -10,6 +10,7 @@ import (
 
 var indextpl = template.Must(template.ParseFiles("views/index.html"))
 var env = os.Getenv("APP_ENV")
+var imgpath http.FileSystem
 
 func index(w http.ResponseWriter, r *http.Request) {
 	files, _ := ioutil.ReadDir("img")
@@ -19,8 +20,6 @@ func index(w http.ResponseWriter, r *http.Request) {
 }
 
 func imager() http.Handler {
-	abspath, _ := os.Getwd()
-	imgpath := http.Dir(abspath + "/img/")
 	return http.StripPrefix("/img/", http.FileServer(imgpath))
 }
 
@@ -34,6 +33,13 @@ func main() {
 	http.HandleFunc("/", index)
 	http.Handle("/static/", static())
 	http.Handle("/img/", imager())
+
+	if env == "production" {
+		imgpath = http.Dir("/var/www/shared/gifasaurus/img/")
+	} else {
+		abspath, _ := os.Getwd()
+		imgpath = http.Dir(abspath + "/img/")
+	}
 
 	if env == "production" {
 		if err := http.ListenAndServe(":80", nil); err != nil {
