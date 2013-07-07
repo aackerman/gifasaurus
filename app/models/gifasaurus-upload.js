@@ -4,15 +4,7 @@ var uuid       = require('uuid');
 var spawn      = require('child_process').spawn;
 var fs         = require('fs');
 var glob       = require('glob');
-var winston    = require('winston');
-var ffmpegBin  = (process.env.NODE_ENV == 'production') ? 'avconv' : 'ffmpeg';
-
-var logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.Console)(),
-    new (winston.transports.File)({ filename: 'somefile.log' })
-  ]
-});
+var logger     = require(process.cwd() + '/app/lib/logger');
 
 function GifasuarusUpload(req, res) {
   this.request = req;
@@ -35,7 +27,7 @@ GifasuarusUpload.prototype.uploadErrorHandler = function(err, fields, files) {
 GifasuarusUpload.prototype.spawnFFmpeg = function(file, tmpname, options) {
   options = options || {};
 
-  console.log('Used:', ffmpegBin, ' for video to image conversion');
+  logger.debug('Used:', ffmpegBin, ' for video to image conversion');
 
   return spawn(ffmpegBin, [
     '-i',
@@ -82,7 +74,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
   // handle other operations when ffmpeg is complete
   ffmpeg.on('close', function (code) {
-    console.log('ffmpeg close code: ', code);
+    logger.info('ffmpeg close code: ', code);
 
     // handle error codes
     if (code !== 0) {
@@ -90,13 +82,13 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
       return;
     }
 
-    console.log('ffmpeg completed creating image files from video');
+    logger.info('ffmpeg completed creating image files from video');
 
     var imagemagick = this.spawnImageMagick(tmpfileGlobPath);
     var gifsicle = this.spawnGifsicle();
 
     imagemagick.on('error', function(err){
-      console.log('imagemagick error', err);
+      logger.debug('imagemagick error', err);
     });
 
     imagemagick.stderr.pipe(process.stdout);
@@ -105,24 +97,24 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
     gifsicle.stdout.pipe(outfileWriteStream);
 
     imagemagick.on('close', function(code){
-      console.log('imagemagick close code: ', code);
+      logger.info('imagemagick close code: ', code);
       if (code !== 0) {
         self.response.json({ error: "Error during imagemagick conversion" });
         outfileWriteStream.close();
         return;
       }
-      console.log('imagemagick conversion complete');
+      logger.info('imagemagick conversion complete');
     });
 
     gifsicle.on('close', function(code){
-      console.log('gifsicle close code: ', code);
+      logger.info('gifsicle close code: ', code);
 
       if (code !== 0) {
         self.response.json({ error: "Error during gifsicle conversion" });
         return;
       }
 
-      console.log('gif file created');
+      logger.info('gif file created');
 
       // respond to the user
       self.response.send({ file: {
@@ -131,7 +123,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
       }});
 
       glob(tmpfileGlobPath, function(err, files){
-        console.log('deleting tmp files');
+        logger.info('deleting tmp files');
         files.forEach(fs.unlink);
       });
     });
