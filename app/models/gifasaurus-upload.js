@@ -71,20 +71,12 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
   var ffmpeg = this.spawnFFmpeg(file, tmpname);
 
-  ffmpeg.stderr.on('data', function(data){
-    console.log(data);
-  });
-
-  ffmpeg.stdout.on('data', function(data){
-    console.log(data);
-  });
-
   // handle other operations when ffmpeg is complete
   ffmpeg.on('close', function (code) {
+    console.log('ffmpeg close code: ', code);
 
     // handle error codes
     if (code !== 0) {
-      console.log(code);
       self.response.json({ error: "Error during ffmpeg conversion" });
       return;
     }
@@ -94,20 +86,12 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
     var imagemagick = this.spawnImageMagick(tmpfileGlobPath);
     var gifsicle = this.spawnGifsicle();
 
-    imagemagick.stdout.on('data', function(data){
-      console.log(data);
-    });
-
-    imagemagick.stderr.on('data', function(data){
-      console.log(data);
-    });
-
     imagemagick.stdout.pipe(gifsicle.stdin);
     gifsicle.stdout.pipe(outfileWriteStream);
 
     imagemagick.on('close', function(code){
+      console.log('imagemagick close code: ', code);
       if (code !== 0) {
-        console.log(code);
         self.response.json({ error: "Error during imagemagick conversion" });
         outfileWriteStream.close();
         return;
@@ -116,6 +100,8 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
     });
 
     gifsicle.on('close', function(code){
+      console.log('gifsicle close code: ', code);
+
       if (code !== 0) {
         self.response.json({ error: "Error during gifsicle conversion" });
         return;
