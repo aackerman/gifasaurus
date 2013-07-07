@@ -9,9 +9,12 @@ app.use(express.favicon());
 app.use(express.cookieParser());
 app.use(express.session({ secret: 'sauce' }));
 
-app.use('/assets', express.static(APPROOT + '/assets'));
-app.use('/img', express.static(EXPRESSROOT + '/gifs'));
 app.post('/upload', UploadController);
-app.use('/', express.static(EXPRESSROOT + '/public'));
+
+app.configure('development', function(){
+  app.use('/assets', express.static(APPROOT + '/assets'));
+  app.use('/img', express.static(EXPRESSROOT + '/gifs'));
+  app.use('/', express.static(EXPRESSROOT + '/public'));
+});
 
 app.listen(8000);
