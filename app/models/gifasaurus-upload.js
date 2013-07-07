@@ -71,6 +71,14 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
   var ffmpeg = this.spawnFFmpeg(file, tmpname);
 
+  ffmpeg.stderr.on('data', function(data){
+    console.log(data);
+  });
+
+  ffmpeg.stdout.on('data', function(data){
+    console.log(data);
+  });
+
   // handle other operations when ffmpeg is complete
   ffmpeg.on('close', function (code) {
 
