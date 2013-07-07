@@ -46,8 +46,6 @@ GifasuarusUpload.prototype.spawnImageMagick = function(tmpfileGlobPath) {
     '+dither',
     '-layers',
     'Optimize',
-    '-resize',
-    '600x600\\>',
     tmpfileGlobPath,
     'GIF:-'
   ]);
