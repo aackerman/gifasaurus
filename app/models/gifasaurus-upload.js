@@ -20,7 +20,6 @@ GifasuarusUpload.prototype.setupForm = function() {
 };
 
 GifasuarusUpload.prototype.uploadErrorHandler = function(err, fields, files) {
-  // TODO add error logging
   if (err) this.response.json({ error: { message: "Error uploading file" }});
 };
 
@@ -108,7 +107,8 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
       // respond to the user
       self.response.send({ file: {
-        name: tmpname
+        id: tmpname,
+        filename: tmpname + '.gif'
       }});
 
       glob(tmpfileGlobPath, function(err, files){

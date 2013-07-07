@@ -6,6 +6,8 @@ EXPRESSROOT = process.cwd();
 APPROOT = EXPRESSROOT + '/app/';
 
 app.use(express.favicon());
+app.use(express.cookieParser());
+app.use(express.session({ secret: 'sauce' }));
 
 app.use('/assets', express.static(APPROOT + '/assets'));
 app.use('/img', express.static(EXPRESSROOT + '/gifs'));
