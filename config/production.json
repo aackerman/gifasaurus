@@ -1,3 +1,4 @@
 {
-  "logfile": "production.log"
+  "logfile": "production.log",
+  "logpath": "/var/www/shared/gifasaurus/log/"
 }

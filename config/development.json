@@ -1,3 +1,4 @@
 {
-  "logfile": "development.log"
+  "logfile": "development.log",
+  "logpath": "tmp/log/"
 }
