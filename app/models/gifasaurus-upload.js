@@ -88,9 +88,13 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
     imagemagick.stdout.pipe(gifsicle.stdin);
     gifsicle.stdout.pipe(outfileWriteStream);
 
+    imagemagick.stderr.on('data', function(data){
+      console.log(data);
+    });
+
     imagemagick.on('close', function(code){
       if (code !== 0) {
-        this.response.json({ error: "Error during imagemagick conversion" });
+        self.response.json({ error: "Error during imagemagick conversion" });
         outfile.close();
         return;
       }
@@ -99,7 +103,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
     gifsicle.on('close', function(code){
       if (code !== 0) {
-        this.response.json({ error: "Error during gifsicle conversion" });
+        self.response.json({ error: "Error during gifsicle conversion" });
         return;
       }
 
