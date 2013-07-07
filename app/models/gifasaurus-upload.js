@@ -4,7 +4,15 @@ var uuid       = require('uuid');
 var spawn      = require('child_process').spawn;
 var fs         = require('fs');
 var glob       = require('glob');
+var winston    = require('winston');
 var ffmpegBin  = (process.env.NODE_ENV == 'production') ? 'avconv' : 'ffmpeg';
+
+var logger = new (winston.Logger)({
+  transports: [
+    new (winston.transports.Console)(),
+    new (winston.transports.File)({ filename: 'somefile.log' })
+  ]
+});
 
 function GifasuarusUpload(req, res) {
   this.request = req;
