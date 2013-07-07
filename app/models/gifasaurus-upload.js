@@ -93,13 +93,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
       console.log('imagemagick error', err);
     });
 
-    imagemagick.stderr.on('data', function(data) {
-      console.log('imagemagick stderr data:', data);
-    });
-
-    imagemagick.stdout.on('data', function(data) {
-      console.log('imagemagick stdout data:', data);
-    });
+    imagemagick.stderr.pipe(process.stdout);
 
     imagemagick.stdout.pipe(gifsicle.stdin);
     gifsicle.stdout.pipe(outfileWriteStream);
