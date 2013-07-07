@@ -3,6 +3,19 @@
   height: 150px;
   margin: 0 auto;
   border: 1px dashed #333;
+  transition: border-radius .25s;
+}
+
+.dnd-container {
+  margin: 50px auto;
+}
+
+.tcenter {
+  text-align: center;
+}
+
+.circlize {
+  border-radius: 50%;
 }
 
 .dz-preview {

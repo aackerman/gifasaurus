@@ -9,13 +9,26 @@
 <body>
 
   <script type="text/x-handlebars">
-    <h1>gifasaurus</h1>
+    <h1>{{#linkTo "index"}}gifasaurus{{/linkTo}}</h1>
+    {{outlet}}
+  </script>
+
+  <script type="text/x-handlebars" id="index">
     <div id="dropload"></div>
     <ul>
     {{#each item in model}}
       <li>{{#linkTo "i" item.name}}{{item.name}}{{/linkTo}}</li>
     {{/each}}
     </ul>
+  </script>
+
+  <script type="text/x-handlebars" id="i">
+    <div class="dnd-container">
+      <div id="dropload"></div>
+    </div>
+    <div class="tcenter">
+      <img {{bindAttr src="path"}}/>
+    </div>
   </script>
 
   <script src="assets/js/libs/jquery-1.9.1.js"></script>
