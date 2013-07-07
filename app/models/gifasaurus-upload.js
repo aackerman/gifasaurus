@@ -27,6 +27,8 @@ GifasuarusUpload.prototype.uploadErrorHandler = function(err, fields, files) {
 GifasuarusUpload.prototype.spawnFFmpeg = function(file, tmpname, options) {
   options = options || {};
 
+  console.log('Used:', ffmpegBin, ' for video to image conversion');
+
   return spawn(ffmpegBin, [
     '-i',
     file.path,
@@ -86,6 +88,18 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
     var imagemagick = this.spawnImageMagick(tmpfileGlobPath);
     var gifsicle = this.spawnGifsicle();
+
+    imagemagick.on('error', function(err){
+      console.log('imagemagick error', err);
+    });
+
+    imagemagick.stderr.on('data', function(data) {
+      console.log('imagemagick stderr data:', data);
+    });
+
+    imagemagick.stdout.on('data', function(data) {
+      console.log('imagemagick stdout data:', data);
+    });
 
     imagemagick.stdout.pipe(gifsicle.stdin);
     gifsicle.stdout.pipe(outfileWriteStream);
