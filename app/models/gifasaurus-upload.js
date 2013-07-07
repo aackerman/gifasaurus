@@ -4,6 +4,7 @@ var uuid       = require('uuid');
 var spawn      = require('child_process').spawn;
 var fs         = require('fs');
 var glob       = require('glob');
+var ffmpegBin  = (process.env.NODE_ENV == 'production') ? 'avconv' : 'ffmpeg';
 
 function GifasuarusUpload(req, res) {
   this.request = req;
@@ -26,7 +27,7 @@ GifasuarusUpload.prototype.uploadErrorHandler = function(err, fields, files) {
 GifasuarusUpload.prototype.spawnFFmpeg = function(file, tmpname, options) {
   options = options || {};
 
-  return spawn('ffmpeg', [
+  return spawn(ffmpegBin, [
     '-i',
     file.path,
     '-r',

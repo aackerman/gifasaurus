@@ -1,5 +1,6 @@
 * Add file logging as console.log is syncronous
 * Tests file formats other than .mov
+* Handle using `avconv` on linux instead of ffmpeg and imagemagick
 * Compile / Copy assets into the public folder for distribution
 * Handle timeout if the image takes possibly longer than 30s to convert
 * Handle styling the content
