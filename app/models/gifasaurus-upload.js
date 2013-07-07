@@ -76,7 +76,8 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
     // handle error codes
     if (code !== 0) {
-      this.response.json({ error: "Error during ffmpeg conversion" });
+      console.log(code);
+      self.response.json({ error: "Error during ffmpeg conversion" });
       return;
     }
 
@@ -84,6 +85,10 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
     var imagemagick = this.spawnImageMagick(tmpfileGlobPath);
     var gifsicle = this.spawnGifsicle();
+
+    imagemagick.stdout.on('data', function(data){
+      console.log(data);
+    });
 
     imagemagick.stderr.on('data', function(data){
       console.log(data);
@@ -94,6 +99,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
     imagemagick.on('close', function(code){
       if (code !== 0) {
+        console.log(code);
         self.response.json({ error: "Error during imagemagick conversion" });
         outfileWriteStream.close();
         return;
