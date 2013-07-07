@@ -1,0 +1,28 @@
+{
+  "name": "gifasaurus",
+  "version": "0.1.0",
+  "author": "Aaron Ackerman <theron17@gmail.com>",
+  "description": "Video to Animated Image Service",
+  "contributors": [
+    {
+      "name": "Aaron Ackerman",
+      "email": "theron17@gmail.com"
+    }
+  ],
+  "main": "./boot.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theron17/gifasaurus.git"
+  },
+  "dependencies": {
+    "express": "~3.3.3",
+    "formidable": "~1.0.14",
+    "uuid": "~1.4.1",
+    "glob": "~3.2.1",
+    "pm2": "~0.5.0"
+  },
+  "noAnalyze": true,
+  "engine": {
+    "node": ">=0.10"
+  }
+}

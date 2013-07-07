@@ -1,5 +1,0 @@
-default:
-	go install .
-
-clean:
-
