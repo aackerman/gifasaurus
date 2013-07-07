@@ -9,15 +9,11 @@
 <body>
 
   <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
+    <h1>gifasaurus</h1>
     <div id="dropload"></div>
-    {{outlet}}
-  </script>
-
-  <script type="text/x-handlebars" data-template-name="index">
     <ul>
     {{#each item in model}}
-      <li>{{item}}</li>
+      <li>{{#linkTo "i" item.name}}{{item.name}}{{/linkTo}}</li>
     {{/each}}
     </ul>
   </script>
