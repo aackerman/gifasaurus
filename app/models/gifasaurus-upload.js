@@ -85,17 +85,17 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
     var imagemagick = this.spawnImageMagick(tmpfileGlobPath);
     var gifsicle = this.spawnGifsicle();
 
-    imagemagick.stdout.pipe(gifsicle.stdin);
-    gifsicle.stdout.pipe(outfileWriteStream);
-
     imagemagick.stderr.on('data', function(data){
       console.log(data);
     });
 
+    imagemagick.stdout.pipe(gifsicle.stdin);
+    gifsicle.stdout.pipe(outfileWriteStream);
+
     imagemagick.on('close', function(code){
       if (code !== 0) {
         self.response.json({ error: "Error during imagemagick conversion" });
-        outfile.close();
+        outfileWriteStream.close();
         return;
       }
       console.log('imagemagick conversion complete');
