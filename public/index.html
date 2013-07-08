@@ -4,20 +4,28 @@
 <meta charset="utf-8">
 <title>gifasaurus</title>
   <link rel="stylesheet" href="assets/css/normalize.css">
+  <link rel="stylesheet" href="assets/css/concrete.css">
+  <link rel="stylesheet" href="assets/css/concrete-components.css">
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
   <script type="text/x-handlebars">
-    <h1>{{#linkTo "index"}}gifasaurus{{/linkTo}}</h1>
+    <div class="container">
+      <section class="navbar clearfix">
+        <ul class="lfloat unstyled-list">
+          <li>{{#linkTo "index" class="navbar-link"}}gifasaurus{{/linkTo}}</li>
+        </ul>
+      </section>
+    </div>
     {{outlet}}
   </script>
 
   <script type="text/x-handlebars" id="index">
     <div id="dropload"></div>
     <ul>
-    {{#each item in model}}
-      <li>{{#linkTo "i" item.id}}{{item.id}}{{/linkTo}}</li>
+    {{#each img in model}}
+      <li>{{#linkTo "i" img}}{{img.id}}{{/linkTo}}</li>
     {{/each}}
     </ul>
   </script>

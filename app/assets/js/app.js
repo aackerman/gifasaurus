@@ -1,18 +1,21 @@
 App = Ember.Application.create();
 
 App.Router.map(function() {
-  this.route("i", { path: "/i/:img" });
+  this.route("i", { path: "/i/:i_id" });
 });
 
 App.IRoute = Ember.Route.extend({
   model: function(params) {
-    return {
-      path: '/img/' + params.img + '.gif'
-    };
+    return Ember.Object.create({
+      id: params.i_id,
+      path: '/img/' + params.i_id + '.gif'
+    });
+  },
+  setupController: function (controller, model) {
+    model.set('path', '/img/' + model.get('id')  + '.gif');
+    controller.set("model", model);
   }
 });
-
-App.IController = Ember.ObjectController.extend({});
 
 App.IndexRoute = Ember.Route.extend({
   model: function() {
@@ -20,8 +23,9 @@ App.IndexRoute = Ember.Route.extend({
   }
 });
 
-App.IndexController = Ember.ObjectController.extend({
+App.IndexController = Ember.ArrayController.extend({
   uploadFile: function(file) {
+    file = Ember.Object.create(file);
     this.get('model').pushObject(file);
   }
 });
