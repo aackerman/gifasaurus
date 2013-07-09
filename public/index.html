@@ -23,11 +23,17 @@
 
   <script type="text/x-handlebars" id="index">
     <div id="dropload"></div>
-    <ul>
-    {{#each img in model}}
-      <li>{{#linkTo "i" img}}{{img.id}}{{/linkTo}}</li>
-    {{/each}}
-    </ul>
+    <section class="sidebar">
+      <ul class="unstyled-list">
+        {{#each img in model}}
+          <li>
+            {{#linkTo "i" img class="sidebar-link" activeClass="is-active"}}
+              {{img.id}}
+            {{/linkTo}}
+          </li>
+        {{/each}}
+      </ul>
+    </section>
   </script>
 
   <script type="text/x-handlebars" id="i">
