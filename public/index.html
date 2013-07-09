@@ -17,12 +17,13 @@
           <li>{{#linkTo "index" class="navbar-link"}}gifasaurus{{/linkTo}}</li>
         </ul>
       </section>
+      <div id="dropload"></div>
+      {{outlet sidebar}}
+      {{outlet}}
     </div>
-    {{outlet}}
   </script>
 
-  <script type="text/x-handlebars" id="index">
-    <div id="dropload"></div>
+  <script type="text/x-handlebars" id="sidebar">
     <section class="sidebar">
       <ul class="unstyled-list">
         {{#each img in model}}

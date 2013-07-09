@@ -1,11 +1,22 @@
 App = Ember.Application.create();
 
-App.File = Ember.Model.extend({
-  id: Ember.attr(),
-  filepath: Ember.attr(),
-  url: '/files'
+App.ApplicationRoute = Ember.Route.extend({
+  renderTemplate: function() {
+    console.log('called ApplicationRoute');
+    this.render();
+    this.render('sidebar', {
+      outlet: 'sidebar',
+      into: 'application'
+    });
+  }
 });
 
+App.File = Ember.Model.extend({
+  id: Ember.attr(),
+  filepath: Ember.attr()
+});
+
+App.File.url = '/files';
 App.File.adapter = Ember.RESTAdapter.create({
   findAll: function(klass, records) {
     $.getJSON('/files')

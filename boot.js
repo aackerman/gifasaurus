@@ -11,6 +11,10 @@ app.set('port', 8000);
 app.use(express.favicon());
 app.use(express.cookieParser());
 app.use(express.session({ secret: 'sauce' }));
+app.use(function(req, res, next){
+  req.session.files = req.session.files || {};
+  next();
+});
 
 app.post('/upload', UploadController);
 app.get('/files', FilesController.all);
