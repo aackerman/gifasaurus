@@ -3,8 +3,16 @@ App = Ember.Application.create();
 App.File = Ember.Model.extend({
   id: Ember.attr(),
   filepath: Ember.attr(),
-  url: '/files',
-  adapter: Ember.RESTAdapter.create()
+  url: '/files'
+});
+
+App.File.adapter = Ember.RESTAdapter.create({
+  findAll: function(klass, records) {
+    $.getJSON('/files')
+     .then(function(data){
+      records.load(klass, data.files);
+    });
+  }
 });
 
 App.Router.map(function() {

@@ -13,7 +13,7 @@ var ffmpegbin  = (function(){
 })();
 
 function GifasuarusUpload(req, res) {
-  req.session.files = req.session.files || [];
+  req.session.files = req.session.files || {};
   this.request = req;
   this.response = res;
   this.setupForm();
@@ -126,7 +126,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
         filepath: '/img/' + tmpname + '.gif'
       };
 
-      self.request.session.files.push(file);
+      self.request.session.files[file.id] = file;
 
       // respond to the user
       self.response.send(file);

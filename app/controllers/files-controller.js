@@ -1,16 +1,14 @@
 
 function all(req, res) {
-  req.session.files = req.session.files || [];
-  res.json(req.session.files);
+  res.json({
+    files: req.session.files || []
+  });
 }
 
 function show(req, res) {
-  var files = req.session.files;
-  if (files.length) {
-    res.json(req.session.files);
-  } else {
-    res.json([]);
-  }
+  res.json({
+    files: req.session.files[req.params.id]
+  });
 }
 
 module.exports = {
