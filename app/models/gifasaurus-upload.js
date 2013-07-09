@@ -123,10 +123,10 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
 
       var file = {
         id: tmpname,
-        filename: tmpname + '.gif'
+        filepath: '/img/' + tmpname + '.gif'
       };
 
-      this.request.session.files.push(file);
+      self.request.session.files.push(file);
 
       // respond to the user
       self.response.send(file);

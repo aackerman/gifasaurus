@@ -2,7 +2,7 @@ var express          = require('express');
 var app              = express();
 var logger           = require(process.cwd() + '/app/lib/logger');
 var UploadController = require(__dirname + '/app/controllers/upload-controller.js');
-var ImagesController = require(__dirname + '/app/controllers/images-controller.js');
+var FilesController  = require(__dirname + '/app/controllers/files-controller.js');
 
 EXPRESSROOT = process.cwd();
 APPROOT = EXPRESSROOT + '/app/';
@@ -13,7 +13,8 @@ app.use(express.cookieParser());
 app.use(express.session({ secret: 'sauce' }));
 
 app.post('/upload', UploadController);
-app.get('/images', ImagesController);
+app.get('/files', FilesController.all);
+app.get('/files/:id', FilesController.show);
 
 app.configure('development', function(){
   app.use('/assets', express.static(APPROOT + '/assets'));
