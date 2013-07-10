@@ -1,7 +1,6 @@
 var express          = require('express');
 var app              = express();
 var logger           = require(process.cwd() + '/app/lib/logger');
-var UploadController = require(__dirname + '/app/controllers/upload-controller.js');
 var FilesController  = require(__dirname + '/app/controllers/files-controller.js');
 
 EXPRESSROOT = process.cwd();
@@ -16,7 +15,7 @@ app.use(function(req, res, next){
   next();
 });
 
-app.post('/upload', UploadController);
+app.post('/files', FilesController.create);
 app.get('/files', FilesController.all);
 app.get('/files/:id', FilesController.show);
 

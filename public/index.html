@@ -17,18 +17,20 @@
           <li>{{#linkTo "index" class="navbar-link"}}gifasaurus{{/linkTo}}</li>
         </ul>
       </section>
-      <div id="dropload"></div>
-      <section class="sidebar">
-        <ul class="unstyled-list">
-          {{#each controller}}
-            <li>
-              {{#linkTo "i" this class="sidebar-link" activeClass="is-active"}}
-                {{id}}
-              {{/linkTo}}
-            </li>
-          {{/each}}
-        </ul>
-      </section>
+      {{view App.UploadView class="upload-view"}}
+      <div class="container">
+        <section class="sidebar">
+          <ul class="unstyled-list">
+            {{#each controller}}
+              <li>
+                {{#linkTo "i" this class="sidebar-link" activeClass="is-active"}}
+                  {{id}}
+                {{/linkTo}}
+              </li>
+            {{/each}}
+          </ul>
+        </section>
+      </div>
       {{outlet}}
     </div>
   </script>
@@ -40,7 +42,6 @@
   </script>
 
   <script src="assets/js/libs/jquery-1.9.1.js"></script>
-  <script src="assets/js/libs/dropzone-3.6.1.min.js"></script>
   <script src="assets/js/libs/handlebars-1.0.0-rc.4.js"></script>
   <script src="assets/js/libs/ember-1.0.0-rc.6.js"></script>
   <script src="assets/js/libs/ember-model.js"></script>

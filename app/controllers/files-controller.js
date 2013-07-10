@@ -1,3 +1,4 @@
+var GifasuarusUpload = require(__dirname + '/../models/gifasaurus-upload.js');
 
 function all(req, res) {
   res.json({
@@ -11,7 +12,12 @@ function show(req, res) {
   });
 }
 
+function create(req, res) {
+  new GifasuarusUpload(req, res);
+}
+
 module.exports = {
   all: all,
-  show: show
+  show: show,
+  create: create
 };
