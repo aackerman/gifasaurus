@@ -1,13 +1,14 @@
 App = Ember.Application.create();
 
 App.ApplicationRoute = Ember.Route.extend({
-  renderTemplate: function() {
-    console.log('called ApplicationRoute');
-    this.render();
-    this.render('sidebar', {
-      outlet: 'sidebar',
-      into: 'application'
-    });
+  model: function() {
+    return App.File.findAll();
+  }
+});
+
+App.ApplicationController = Ember.ArrayController.extend({
+  uploadFile: function(file) {
+    this.get('model').pushObject(App.File.create(file));
   }
 });
 
@@ -18,11 +19,17 @@ App.File = Ember.Model.extend({
 
 App.File.url = '/files';
 App.File.adapter = Ember.RESTAdapter.create({
+  find: function(record, id) {
+    return $.getJSON('/files/' + id)
+     .then(function(data){
+      this.set('model', data.file);
+     }.bind(this));
+  },
   findAll: function(klass, records) {
-    $.getJSON('/files')
+    return $.getJSON('/files')
      .then(function(data){
       records.load(klass, data.files);
-    });
+     }.bind(this));
   }
 });
 
@@ -39,23 +46,12 @@ App.IRoute = Ember.Route.extend({
   }
 });
 
-App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return [];
-  }
-});
-
-App.IndexController = Ember.ArrayController.extend({
-  uploadFile: function(file) {
-    this.get('model').pushObject(App.File.create(file));
-  }
-});
-
-App.IndexView = Ember.View.extend({
+App.ApplicationView = Ember.View.extend({
   didInsertElement: function() {
     var c = this.get('controller');
+
+    // TODO handle this in the controller
     Dropzone.options.dropload = {
-      paramName: "gifasaurus-upload",
       maxFilesize: 2,
       createImageThumbnails: false
     };

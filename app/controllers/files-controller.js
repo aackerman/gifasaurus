@@ -7,7 +7,7 @@ function all(req, res) {
 
 function show(req, res) {
   res.json({
-    files: req.session.files[req.params.id] || {}
+    files: req.session.files[req.params.id] || { file: [] }
   });
 }
 

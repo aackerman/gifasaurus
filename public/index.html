@@ -18,29 +18,22 @@
         </ul>
       </section>
       <div id="dropload"></div>
-      {{outlet sidebar}}
+      <section class="sidebar">
+        <ul class="unstyled-list">
+          {{#each controller}}
+            <li>
+              {{#linkTo "i" this class="sidebar-link" activeClass="is-active"}}
+                {{id}}
+              {{/linkTo}}
+            </li>
+          {{/each}}
+        </ul>
+      </section>
       {{outlet}}
     </div>
   </script>
 
-  <script type="text/x-handlebars" id="sidebar">
-    <section class="sidebar">
-      <ul class="unstyled-list">
-        {{#each img in model}}
-          <li>
-            {{#linkTo "i" img class="sidebar-link" activeClass="is-active"}}
-              {{img.id}}
-            {{/linkTo}}
-          </li>
-        {{/each}}
-      </ul>
-    </section>
-  </script>
-
   <script type="text/x-handlebars" id="i">
-    <div class="dnd-container">
-      <div id="dropload"></div>
-    </div>
     <div class="tcenter">
       <img {{bindAttr src="filepath"}}/>
     </div>

@@ -126,7 +126,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
         filepath: '/img/' + tmpname + '.gif'
       };
 
-      self.request.session.files[file.id] = file;
+      self.request.session.files.push(file);
 
       // respond to the user
       self.response.send(file);
