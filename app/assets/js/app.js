@@ -1,14 +1,9 @@
+
 App = Ember.Application.create();
 
 App.ApplicationRoute = Ember.Route.extend({
   model: function() {
     return App.File.findAll();
-  }
-});
-
-App.ApplicationController = Ember.ArrayController.extend({
-  uploadFile: function(file) {
-    this.get('model').pushObject(App.File.create(file));
   }
 });
 
@@ -21,14 +16,24 @@ App.File.url = '/files';
 App.File.adapter = Ember.RESTAdapter.create({
   createRecord: function(record) {
     var fd = new FormData();
-    fd.append('file', file, file.name);
-    fd.append('size', file.size);
-    $.post('/files')
+    fd.append('file', record.file, record.file.name);
+    fd.append('size', record.file.size);
+    $.ajax({
+      type: 'post',
+      url: '/files',
+      processData: false,
+      contentType: false,
+      cache: false,
+      data: fd
+    })
+    .then(function(response){
+      record.load(response.file);
+    }.bind(this));
   },
   find: function(record, id) {
     return $.getJSON('/files/' + id)
      .then(function(data){
-      this.set('model', data.file);
+      record.load(data.file);
      }.bind(this));
   },
   findAll: function(klass, records) {
@@ -64,7 +69,8 @@ Droppable.Drop = Ember.Mixin.create({
     dragOver: Droppable.cancel,
     drop: function(e) {
       e.preventDefault();
-      (e.dataTransfer.files || e.target.files).map(App.File.createRecord);
+      var files = [].slice.call(e.dataTransfer.files || e.target.files);
+      App.File.create({ file: files[0] }).save();
     }
 });
 
