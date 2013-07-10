@@ -2,8 +2,8 @@
 App = Ember.Application.create();
 
 App.ApplicationRoute = Ember.Route.extend({
-  model: function() {
-    return App.File.findAll();
+  model: function(params) {
+    return App.File.find();
   }
 });
 
@@ -26,14 +26,19 @@ App.File.adapter = Ember.RESTAdapter.create({
       cache: false,
       data: fd
     })
-    .then(function(response){
-      record.load(response.file);
+    .then(function(data){
+      Ember.run(function() {
+        record.load(data.file.id, data.file);
+        record.didCreateRecord();
+      });
     }.bind(this));
   },
   find: function(record, id) {
     return $.getJSON('/files/' + id)
      .then(function(data){
-      record.load(data.file);
+      Ember.run(function() {
+        record.load(id, data.file);
+      });
      }.bind(this));
   },
   findAll: function(klass, records) {

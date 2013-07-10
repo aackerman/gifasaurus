@@ -129,7 +129,7 @@ GifasuarusUpload.prototype.handleIncomingFile = function(name, file) {
       self.request.session.files.push(file);
 
       // respond to the user
-      self.response.send(file);
+      self.response.send({ file: file });
 
       glob(tmpfileGlobPath, function(err, files){
         logger.info('['+tmpname+']', 'deleting tmp files');
