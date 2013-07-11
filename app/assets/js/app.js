@@ -18,7 +18,7 @@ App.File.adapter = Ember.RESTAdapter.create({
     var fd = new FormData();
     fd.append('file', record.file, record.file.name);
     fd.append('size', record.file.size);
-    $.ajax({
+    return $.ajax({
       type: 'post',
       url: '/files',
       processData: false,
@@ -50,6 +50,7 @@ App.File.adapter = Ember.RESTAdapter.create({
 });
 
 App.Router.map(function() {
+  this.route("f", { path: "/f/" });
   this.route("i", { path: "/i/:i_id" });
 });
 
@@ -74,9 +75,16 @@ Droppable.Drop = Ember.Mixin.create({
     dragOver: Droppable.cancel,
     drop: function(e) {
       e.preventDefault();
+      $(e.target).addClass('circlize');
       var files = [].slice.call(e.dataTransfer.files || e.target.files);
-      App.File.create({ file: files[0] }).save();
+      App.File.create({ file: files[0] })
+        .save()
+        .then(function(){
+          $(e.target).removeClass('circlize');
+        });
     }
 });
 
-App.UploadView = Ember.View.extend(Droppable.Drop);
+App.UploadView = Ember.View.extend(Droppable.Drop, {
+  templateName: 'upload-view'
+});

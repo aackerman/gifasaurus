@@ -14,11 +14,12 @@
     <div class="container">
       <section class="navbar clearfix">
         <ul class="lfloat unstyled-list">
-          <li>{{#linkTo "index" class="navbar-link"}}gifasaurus{{/linkTo}}</li>
+          <li>{{#linkTo "index" class="navbar-link brand"}}gifasaurus{{/linkTo}}</li>
+          <li>{{#linkTo "f" class="navbar-link"}}files{{/linkTo}}</li>
         </ul>
       </section>
-      {{view App.UploadView class="upload-view"}}
-      <div class="container">
+      <div class="content-container">
+        {{view App.UploadView}}
         <section class="sidebar">
           <ul class="unstyled-list">
             {{#each controller}}
@@ -30,14 +31,20 @@
             {{/each}}
           </ul>
         </section>
+        {{outlet}}
       </div>
-      {{outlet}}
     </div>
   </script>
 
   <script type="text/x-handlebars" id="i">
-    <div class="tcenter">
+    <div class="upload-view">
       <img {{bindAttr src="filepath"}}/>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" data-template-name="upload-view">
+    <div class="upload-box">
+      drag and drop to upload
     </div>
   </script>
 

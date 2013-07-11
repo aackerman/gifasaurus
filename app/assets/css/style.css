@@ -1,13 +1,22 @@
-.upload-view {
-  width: 150px;
-  height: 150px;
-  margin: 0 auto;
-  border: 1px dashed #333;
+.upload-box {
+  width: 200px;
+  height: 200px;
+  margin: 20px auto;
+  line-height: 200px;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-image: url(/assets/img/code_background.gif);
   transition: border-radius .25s;
 }
 
-.dnd-container {
-  margin: 50px auto;
+.upload-view {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.content-container {
+  position: relative;
 }
 
 .tcenter {
@@ -18,6 +27,6 @@
   border-radius: 50%;
 }
 
-.dz-preview {
-  display: none;
+.brand {
+  font-weight: bold;
 }
