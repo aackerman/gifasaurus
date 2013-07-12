@@ -7,6 +7,12 @@ App.ApplicationRoute = Ember.Route.extend({
   }
 });
 
+App.FRoute = Ember.Route.extend({
+  model: function(params) {
+    return App.File.find();
+  }
+});
+
 App.File = Ember.Model.extend({
   id: Ember.attr(),
   filepath: Ember.attr()
@@ -73,18 +79,23 @@ Droppable.cancel = function(event) {
 Droppable.Drop = Ember.Mixin.create({
     dragEnter: Droppable.cancel,
     dragOver: Droppable.cancel,
+    uploadFiles: function(files) {
+      App.File.create({ file: files[0] }).save();
+    },
     drop: function(e) {
       e.preventDefault();
-      $(e.target).addClass('circlize');
       var files = [].slice.call(e.dataTransfer.files || e.target.files);
-      App.File.create({ file: files[0] })
-        .save()
-        .then(function(){
-          $(e.target).removeClass('circlize');
-        });
+      this.uploadFiles(files);
     }
 });
 
 App.UploadView = Ember.View.extend(Droppable.Drop, {
-  templateName: 'upload-view'
+  templateName: 'upload-view',
+  didInsertElement: function() {
+    $('.js-upload-input').trigger('click');
+    $('.js-upload-input').on('change', function(e){
+      var files = [].slice.call(e.dataTransfer.files || e.target.files);
+      this.uploadFiles(e);
+    }.bind(this));
+  }
 });

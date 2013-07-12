@@ -17,9 +17,9 @@
           <li>{{#linkTo "index" class="navbar-link brand"}}gifasaurus{{/linkTo}}</li>
           <li>{{#linkTo "f" class="navbar-link"}}files{{/linkTo}}</li>
         </ul>
+        {{view App.UploadView}}
       </section>
       <div class="content-container">
-        {{view App.UploadView}}
         <section class="sidebar">
           <ul class="unstyled-list">
             {{#each controller}}
@@ -34,11 +34,20 @@
         {{outlet}}
       </div>
     </div>
+    <input type="file" class="hide js-upload-input" />
   </script>
 
   <script type="text/x-handlebars" id="i">
     <div class="upload-view">
       <img {{bindAttr src="filepath"}}/>
+    </div>
+  </script>
+
+  <script type="text/x-handlebars" id="f">
+    <div class="files-view">
+      {{#each controller}}
+        <img {{bindAttr src="filepath"}}/>
+      {{/each}}
     </div>
   </script>
 

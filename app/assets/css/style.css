@@ -1,12 +1,24 @@
 .upload-box {
-  width: 200px;
-  height: 200px;
-  margin: 20px auto;
-  line-height: 200px;
+  width: 300px;
+  height: 60px;
+  margin: 5px auto;
+  line-height: 60px;
+  border-radius: 2px;
   text-align: center;
   border: 1px solid #ccc;
+  cursor: pointer;
   background-image: url(/assets/img/code_background.gif);
   transition: border-radius .25s;
+}
+
+.files-view {
+  width: 50%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.files-view img {
+  margin-bottom: 10px;
 }
 
 .upload-view {
@@ -21,10 +33,6 @@
 
 .tcenter {
   text-align: center;
-}
-
-.circlize {
-  border-radius: 50%;
 }
 
 .brand {
