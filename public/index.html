@@ -15,7 +15,7 @@
       <section class="navbar clearfix">
         <ul class="lfloat unstyled-list">
           <li>{{#linkTo "index" class="navbar-link brand"}}gifasaurus{{/linkTo}}</li>
-          <li>{{#linkTo "f" class="navbar-link"}}files{{/linkTo}}</li>
+          <li>{{#linkTo "files" class="navbar-link"}}files{{/linkTo}}</li>
         </ul>
         {{view App.UploadView}}
       </section>
@@ -43,7 +43,7 @@
     </div>
   </script>
 
-  <script type="text/x-handlebars" id="f">
+  <script type="text/x-handlebars" id="files">
     <div class="files-view">
       {{#each controller}}
         <img {{bindAttr src="filepath"}}/>
@@ -62,5 +62,6 @@
   <script src="assets/js/libs/ember-1.0.0-rc.6.js"></script>
   <script src="assets/js/libs/ember-model.js"></script>
   <script src="assets/js/app.js"></script>
+  <script src="assets/js/models/file.js"></script>
 </body>
 </html>
