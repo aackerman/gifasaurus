@@ -21,7 +21,7 @@ app.get('/files/:id', FilesController.show);
 
 app.configure('development', function(){
   app.use('/assets', express.static(APPROOT + '/assets'));
-  app.use('/img', express.static(EXPRESSROOT + '/gifs'));
+  app.use('/data', express.static(EXPRESSROOT + '/gifs'));
   app.use('/', express.static(EXPRESSROOT + '/public'));
 });
 
