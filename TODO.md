@@ -1,8 +1,8 @@
 * Tests file formats other than .mov
 * Asset compilation into the public folder for distribution
 * Handle timeout if the image takes possibly longer than 30s to convert
-* Handle styling the content
-* Use sessions to manage users viewing files that have already been uploaded
+* Replace memory sessions with redis backed sessions
+* Create uploading interface to show the user that something is happening
 * Create route for allowing a user to let us know they would pay for the service
 
 ## Deployment Tasks
@@ -14,3 +14,4 @@
 ## Technology Choices
 * Express - based on ease of use only
 * Ember - based on interest and client-side only rendering
+* Redis
